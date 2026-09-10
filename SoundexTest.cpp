@@ -18,9 +18,10 @@ private:
 
 using ::testing::Eq;
 
-class SoundexEncoding:: Testing {
+class SoundexEncoding: public testing::Test {
+public:
   Soundex soundex;
-}
+};
 
 TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWorld) {
   auto encoded = soundex.encode("A");
