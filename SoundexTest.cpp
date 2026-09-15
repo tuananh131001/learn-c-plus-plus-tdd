@@ -15,3 +15,7 @@ TEST_F(SoundexEncoding, RetainsSoleLetterOfOneLetterWorld) {
 TEST_F(SoundexEncoding, RetainsSoleLetterOfThreeDigits) {
   ASSERT_THAT(soundex.encode("I"), Eq("I000"));
 };
+
+TEST_F(SoundexEncoding, ReplaceConstantsWithApproratedDigits) {
+  ASSERT_THAT(soundex.encode("Ar"), Eq("A600"));
+};
