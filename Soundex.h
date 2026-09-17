@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <unordered_set>
 
 class Soundex {
 public:
@@ -25,6 +26,7 @@ private:
 
       for (char c : word) {
         if (isComplete(encodedDigits)) break;
+        if(isVowels(c)) continue;
 
         encodedDigits += staticDigit(c);
       }
@@ -36,6 +38,12 @@ private:
 
   bool isComplete(std::string encodedString) const {
     return encodedString.length() == MaxCodeLength - 1;
+  }
+
+  bool isVowels(char c) const {
+    std::unordered_set<char> vowelsDict{ 'a', 'e', 'i', 'o', 'u', 'y', 'h', 'w' };
+
+    return vowelsDict.find(c) != vowelsDict.end(); // reach end not found
   }
 
   std::string staticDigit(char letter) const {
