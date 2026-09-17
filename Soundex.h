@@ -11,17 +11,33 @@ public:
   }
 
 private:
+  static const size_t MaxCodeLength{4};
+
   std::string head(const std::string& word) const {
     return word.substr(0, 1);
   }
 
   // if word is 2 letter or above return 1 or else return empty
+  // encodedDigits("Ar") -> 6
   std::string encodedDigits(const std::string& word) const {
     if (word.length() > 1) {
-      return staticDigit(word[1]);
+      std::string encodedDigits;
+
+      for (char c : word) {
+        if (isComplete(encodedDigits)) break;
+
+        encodedDigits += staticDigit(c);
+      }
+
+      return encodedDigits;
     };
     return "";
   }
+
+  bool isComplete(std::string encodedString) const {
+    return encodedString.length() == MaxCodeLength - 1;
+  }
+
   std::string staticDigit(char letter) const {
     std::unordered_map<char, std::string> dict {
       {'b', "1"}, {'f', "1"}, {'p', "1"}, {'v', "1"},
@@ -33,10 +49,10 @@ private:
       {'r', "6"}
     };
 
-    return dict.find(letter)->second;
+    auto digit = dict.find(letter);
+    return digit == dict.end() ? "" : digit ->second;
   }
   
-  static const size_t MaxCodeLength{4};
   std::string zeroPad(const std::string& encoded) const {
     int zeroNeeded = MaxCodeLength - encoded.size();
 
